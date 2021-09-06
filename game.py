@@ -47,3 +47,19 @@ class Game():
                 if(self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
                     self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
+
+    def left(self):
+        new_piece = self.active_piece
+        new_piece.x -= 1
+        # if no collision, move active piece
+        if not self.checkcollision(new_piece):
+            self.active_piece.x -= 1
+        return
+
+    def right(self):
+        new_piece = self.active_piece
+        new_piece.x += 1
+        # if no collision, move active piece
+        if not self.checkcollision(new_piece):
+            self.active_piece.x += 1
+        return
