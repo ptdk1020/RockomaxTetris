@@ -15,8 +15,8 @@ class Game():
             self.is_piece_active = True;
             self.active_piece = piece.Piece(random.randint(0,6));
         else:
-            self.piece.y -= 1;
-            if(self.checkcollision()):
+            self.active_piece.y -= 1;
+            if(self.checkcollision(self.active_piece)):
                 self.piece.y += 1;
                 self.mergepiece();
         #Updating the visible board, first by resetting it.
@@ -26,8 +26,8 @@ class Game():
                 self.boardandpiece[0,j,i] = self.board[j,i];
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                if(self.piece.y-i < 20):
-                    self.boardandpiece[1,self.piece.y-i, self.piece.x+j] = self.active_piece.data[j,i]
+                if(self.active_piece.y-i < 20):
+                    self.boardandpiece[1,self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
         
     def checkcollision(self, test_piece): #Check if a piece collides with board with its current coordinates
@@ -41,5 +41,5 @@ class Game():
         self.is_piece_active = False;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):        
-                self.board[self.piece.y-i, self.piece.x+j] = self.active_piece.data[j,i]
+                self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
