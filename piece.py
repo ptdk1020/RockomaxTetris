@@ -30,8 +30,8 @@ class Piece():
                 for j in range(0,4):
                     x = i - 1.5;
                     y = j - 1.5;
-                    newx = -y;
-                    newy = x;
+                    newx = y;
+                    newy = -x;
                     newdata[(int)(newy + 1.5),(int)(newx + 1.5)] = (int)(self.data[j,i]);
             self.data = newdata;
         else:
@@ -40,7 +40,7 @@ class Piece():
                 for j in range(0,3):
                     x = i - 1;
                     y = j - 1;
-                    newx = -y;
-                    newy = x;
+                    newx = y;
+                    newy = -x;
                     newdata[(int)(newy + 1),(int)(newx + 1)] = (int)(self.data[j,i]);
             self.data = newdata;            

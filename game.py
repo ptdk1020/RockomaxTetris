@@ -33,7 +33,8 @@ class Game():
                         self.board[k,l] = self.board[k+1,l];
                 for l in range(0,10):
                     self.board[19,l] = 0;
-            i -= 1;
+                self.check_lines();
+                break; break;
 
     def update_visibleboard(self):
         #Updating the visible board, first by resetting it.
