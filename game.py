@@ -44,6 +44,7 @@ class Game():
             full = np.prod(self.board[i, :])
             if full == 1:
                 self.board[i:-1, :] = self.board[i + 1:, :]
+                self.board[19,:] = 0
             else:
                 i += 1
 
