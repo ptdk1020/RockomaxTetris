@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from copy import copy
 
 import piece
 
@@ -49,7 +50,7 @@ class Game():
         return;
 
     def left(self):
-        new_piece = self.active_piece
+        new_piece = copy(self.active_piece);
         new_piece.x -= 1
         # if no collision, move active piece
         if not self.checkcollision(new_piece):
@@ -57,7 +58,7 @@ class Game():
         return
 
     def right(self):
-        new_piece = self.active_piece
+        new_piece = copy(self.active_piece);
         new_piece.x += 1
         # if no collision, move active piece
         if not self.checkcollision(new_piece):
