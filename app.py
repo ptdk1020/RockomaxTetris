@@ -49,7 +49,7 @@ class TetrisWidget(Widget):
             tetrisGame.down();
         if keycode[1] == 'spacebar':
             print("spacebar");
-        tetrisGame.updateVisibleBoard();
+        tetrisGame.update_visibleboard();
         self.update(0.5);
         return True
 
