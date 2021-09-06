@@ -26,15 +26,15 @@ class Game():
                 self.boardandpiece[0,j,i] = self.board[j,i];
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                if(self.piecey-i < 20):
+                if(self.piece.y-i < 20):
                     self.boardandpiece[1,self.piece.y-i, self.piece.x+j] = self.active_piece.data[j,i]
         return;
         
-    def checkcollision(self, Piece test_piece): #Check if a piece collides with board with its current coordinates
+    def checkcollision(self, test_piece): #Check if a piece collides with board with its current coordinates
         collisionresult = 0;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                collisionresult += self.board[test_pice.y-i, test_piece.x+j]*self.active_piece.data[j,i];
+                collisionresult += self.board[test_piece.y-i, test_piece.x+j]*self.active_piece.data[j,i];
         return collisionresult;
         
     def mergepiece(self): #Merge the piece with the board
