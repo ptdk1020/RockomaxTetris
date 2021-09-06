@@ -44,19 +44,20 @@ class TetrisWidget(Widget):
         if keycode[1] == 'right':
             tetrisGame.right();
         if keycode[1] == 'up':
-            print("up");
+            tetrisGame.up();
         if keycode[1] == 'down':
-            print("down");
+            tetrisGame.down();
         if keycode[1] == 'spacebar':
             print("spacebar");
-        self.update();
+        tetrisGame.updateVisibleBoard();
+        self.update(0.5);
         return True
 
 class TetrisApp(App):
     def build(self):
         tetrisapp = TetrisWidget()
-        Clock.schedule_interval(tetrisapp.update, 0.5)
         Clock.schedule_interval(tetrisGame.update,0.5)
+        Clock.schedule_interval(tetrisapp.update, 0.5)
         return tetrisapp
 
 if __name__ == "__main__":
