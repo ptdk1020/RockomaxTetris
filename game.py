@@ -9,18 +9,20 @@ class Game():
         self.board = np.zeros((23,10)) #Game board extends internally above y = 20 to allow pieces to exist there
         self.boardandpiece = np.zeros((2,20,10)) #3D array.  0 for a dead block, 1 for for a block from the active piece
         self.is_piece_active = False;
+        self.game_over = False;
         
     def update(self, *args):
-        self.check_lines();
-        if(self.is_piece_active == False):
-            self.is_piece_active = True;
-            self.active_piece = piece.Piece(random.randint(0,6));
-        else:
-            self.active_piece.y -= 1;
-            if(self.checkcollision(self.active_piece)):
-                self.active_piece.y += 1;
-                self.mergepiece();
-        self.update_visibleboard()
+        if not (self.game_over):
+            self.check_lines();
+            if(self.is_piece_active == False):
+                self.is_piece_active = True;
+                self.active_piece = piece.Piece(random.randint(0,6));
+            else:
+                self.active_piece.y -= 1;
+                if(self.checkcollision(self.active_piece)):
+                    self.active_piece.y += 1;
+                    self.mergepiece();
+            self.update_visibleboard()
         
     def check_lines(self):
         for i in range(0,20):
@@ -34,7 +36,8 @@ class Game():
                 for l in range(0,10):
                     self.board[19,l] = 0;
                 self.check_lines();
-                break; break;
+                break; 
+            break;
 
     def update_visibleboard(self):
         #Updating the visible board, first by resetting it.
@@ -63,8 +66,11 @@ class Game():
         self.is_piece_active = False;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
+                if(self.active_piece.data[j,i] == 1 and self.active_piece.y-i > 19):
+                    self.game_over = True;
                 if(self.active_piece.data[j,i] == 1 and self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
-                    self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
+                    self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i];
+        self.update_visibleboard();
         return;
 
     def left(self):
