@@ -1,3 +1,4 @@
+from kivy.uix.widget import Widget
 import numpy as np
 import random
 
@@ -9,7 +10,7 @@ class Game():
         self.boardandpiece = np.zeros((2,20,10)) #3D array.  0 for a dead block, 1 for for a block from the active piece
         self.is_piece_active = False;
         
-    def update(self):
+    def update(self, *args):
         if(self.is_piece_active == False):
             self.is_piece_active = True;
             self.active_piece = piece.Piece(random.randint(0,6));
@@ -20,7 +21,8 @@ class Game():
             if(self.checkcollision()):
                 self.piecey += 1;
                 self.mergepiece();
-        #Updating the visible board
+        #Updating the visible board, first by resetting it.
+        self.boardandpiece = np.zeros((2,20,10));
         for i in range(0,10):
             for j in range(0,20):
                 self.boardandpiece[0,j,i] = self.board[j,i];
