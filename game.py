@@ -11,6 +11,7 @@ class Game():
         self.is_piece_active = False;
         
     def update(self, *args):
+        self.check_lines();
         if(self.is_piece_active == False):
             self.is_piece_active = True;
             self.active_piece = piece.Piece(random.randint(0,6));
@@ -20,6 +21,19 @@ class Game():
                 self.active_piece.y += 1;
                 self.mergepiece();
         self.update_visibleboard()
+        
+    def check_lines(self):
+        for i in range(0,20):
+            full = 1;
+            for j in range(0,10):
+                full *= self.board[i,j];
+            if(full == 1):
+                for k in range(i,19):
+                    for l in range(0,10):
+                        self.board[k,l] = self.board[k+1,l];
+                for l in range(0,10):
+                    self.board[19,l] = 0;
+            i -= 1;
 
     def update_visibleboard(self):
         #Updating the visible board, first by resetting it.
