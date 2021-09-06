@@ -11,16 +11,19 @@ Config.set('graphics', 'height', '700')
 
 tetrisGame = game.Game();
 
-class Time(Widget):
+class TetrisWidget(Widget):
+    def __init__(self, **kwargs):
+        super(TetrisWidget, self).__init__(**kwargs)
+    
     def update(self, *args):
         self.canvas.clear();
         with self.canvas:
             for i in range(0,10):
                 for j in range(0,20):
-                    # Add a red color
+                    # Add a blue color
                         if(tetrisGame.boardandpiece[0,j,i] == 1):
                             Color(0, 1.0, 0)
-                            # Add a square for the active Tetris piece blocks
+                            # Add a square for the inactive Tetris piece blocks
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
             for i in range(0,10):
                 for j in range(0,20):
@@ -32,7 +35,7 @@ class Time(Widget):
 
 class TetrisApp(App):
     def build(self):
-        tetrisapp = Time()
+        tetrisapp = TetrisWidget()
         Clock.schedule_interval(tetrisapp.update, 1)
         Clock.schedule_interval(tetrisGame.update,1)
         return tetrisapp
