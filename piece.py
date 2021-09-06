@@ -42,6 +42,3 @@ class Piece():
                     newy = x;
                     newdata[(int)(newy + 1),(int)(newx + 1)] = (int)(self.data[j,i]);
             self.data = newdata;            
-            
-piece = Piece(1);
-piece.clockwise_rotate();
