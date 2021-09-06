@@ -1,8 +1,10 @@
+import sys
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 from kivy.config import Config
 from kivy.graphics import Color, Rectangle
+from kivy.core.window import Window
 
 import game
 
@@ -14,6 +16,8 @@ tetrisGame = game.Game();
 class TetrisWidget(Widget):
     def __init__(self, **kwargs):
         super(TetrisWidget, self).__init__(**kwargs)
+        self._keyboard = Window.request_keyboard(self.press, self)
+        self._keyboard.bind(on_key_down=self.press)
     
     def update(self, *args):
         self.canvas.clear();
@@ -32,6 +36,20 @@ class TetrisWidget(Widget):
                             Color(1., 0, 0)
                             # Add a square for the active Tetris piece blocks
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
+                            
+
+    def press(self, keyboard, keycode, text, modifiers):
+        if keycode[1] == 'left':
+            print("left");
+        if keycode[1] == 'right':
+            print("right");
+        if keycode[1] == 'up':
+            print("up");
+        if keycode[1] == 'down':
+            print("down");
+        if keycode[1] == 'spacebar':
+            print("spacebar");
+        return True
 
 class TetrisApp(App):
     def build(self):
