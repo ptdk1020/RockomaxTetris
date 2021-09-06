@@ -19,6 +19,9 @@ class Game():
             if(self.checkcollision(self.active_piece)):
                 self.active_piece.y += 1;
                 self.mergepiece();
+        self.update_visibleboard()
+
+    def update_visibleboard(self):
         #Updating the visible board, first by resetting it.
         self.boardandpiece = np.zeros((2,20,10));
         for i in range(0,10):
@@ -64,3 +67,18 @@ class Game():
         if not self.checkcollision(new_piece):
             self.active_piece.x += 1
         return
+
+    def up(self):
+        new_piece = copy(self.active_piece)
+        new_piece.clockwise_rotate()
+        if not self.checkcollision(new_piece):
+            self.active_piece.clockwise_rotate()
+        return
+
+    def down(self):
+        new_piece = copy(self.active_piece)
+        new_piece.y -= 1
+        if not self.checkcollision(new_piece):
+            self.active_piece.y -= 1
+        else:
+            self.mergepiece()

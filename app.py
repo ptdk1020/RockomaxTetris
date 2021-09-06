@@ -44,9 +44,9 @@ class TetrisWidget(Widget):
         if keycode[1] == 'right':
             tetrisGame.right();
         if keycode[1] == 'up':
-            print("up");
+            tetrisGame.up();
         if keycode[1] == 'down':
-            print("down");
+            tetrisGame.down();
         if keycode[1] == 'spacebar':
             print("spacebar");
         self.update();
