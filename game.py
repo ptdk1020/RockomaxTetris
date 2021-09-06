@@ -29,7 +29,7 @@ class Game():
                 self.boardandpiece[0,j,i] = self.board[j,i];
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                if(self.active_piece.y-i < 20):
+                if(self.active_piece.y-i < 20 and self.active_piece.x+j >= 0 and self.active_piece.x+j < 10):
                     self.boardandpiece[1,self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
         
@@ -48,7 +48,7 @@ class Game():
         self.is_piece_active = False;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                if(self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
+                if(self.active_piece.data[j,i] == 1 and self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
                     self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
 
