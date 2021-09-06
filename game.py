@@ -1,4 +1,3 @@
-from kivy.uix.widget import Widget
 import numpy as np
 import random
 
@@ -17,7 +16,7 @@ class Game():
         else:
             self.active_piece.y -= 1;
             if(self.checkcollision(self.active_piece)):
-                self.piece.y += 1;
+                self.active_piece.y += 1;
                 self.mergepiece();
         #Updating the visible board, first by resetting it.
         self.boardandpiece = np.zeros((2,20,10));
@@ -30,16 +29,21 @@ class Game():
                     self.boardandpiece[1,self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
         
-    def checkcollision(self, test_piece): #Check if a piece collides with board with its current coordinates
+    def checkcollision(self, test_piece): #Check if a piece collides with board or the edges with its current coordinates
         collisionresult = 0;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                collisionresult += self.board[test_piece.y-i, test_piece.x+j]*self.active_piece.data[j,i];
+                if(test_piece.y-i < 0 or test_piece.x+j < 0 or test_piece.x+j > 9):
+                    collisionresult += self.active_piece.data[j,i];
+                else:
+                    collisionresult += self.board[test_piece.y-i, test_piece.x+j]*self.active_piece.data[j,i];        
+        
         return collisionresult;
         
     def mergepiece(self): #Merge the piece with the board
         self.is_piece_active = False;
         for i in range(0, np.size(self.active_piece.data,1)):
-            for j in range(0,np.size(self.active_piece.data,0)):        
-                self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
+            for j in range(0,np.size(self.active_piece.data,0)):
+                if(self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
+                    self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i]
         return;
