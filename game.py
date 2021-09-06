@@ -14,12 +14,10 @@ class Game():
         if(self.is_piece_active == False):
             self.is_piece_active = True;
             self.active_piece = piece.Piece(random.randint(0,6));
-            self.piecex = 4;
-            self.piecey = 22;
         else:
-            self.piecey -= 1;
+            self.piece.y -= 1;
             if(self.checkcollision()):
-                self.piecey += 1;
+                self.piece.y += 1;
                 self.mergepiece();
         #Updating the visible board, first by resetting it.
         self.boardandpiece = np.zeros((2,20,10));
@@ -29,19 +27,19 @@ class Game():
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
                 if(self.piecey-i < 20):
-                    self.boardandpiece[1,self.piecey-i, self.piecex+j] = self.active_piece.data[j,i]
+                    self.boardandpiece[1,self.piece.y-i, self.piece.x+j] = self.active_piece.data[j,i]
         return;
         
-    def checkcollision(self): #Check if a piece collides with board with its current coordinates
+    def checkcollision(self, Piece test_piece): #Check if a piece collides with board with its current coordinates
         collisionresult = 0;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):
-                collisionresult += self.board[self.piecey-i, self.piecex+j]*self.active_piece.data[j,i];
+                collisionresult += self.board[test_pice.y-i, test_piece.x+j]*self.active_piece.data[j,i];
         return collisionresult;
         
     def mergepiece(self): #Merge the piece with the board
         self.is_piece_active = False;
         for i in range(0, np.size(self.active_piece.data,1)):
             for j in range(0,np.size(self.active_piece.data,0)):        
-                self.board[self.piecey-i, self.piecex+j] = self.active_piece.data[j,i]
+                self.board[self.piece.y-i, self.piece.x+j] = self.active_piece.data[j,i]
         return;

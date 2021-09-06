@@ -2,6 +2,8 @@ import numpy as np
 
 class Piece(): 
     def __init__(self, piece_type):
+        self.x = 4;
+        self.y = 22;
         self.data = np.zeros((4,4))
         self.piece_type = piece_type;
         if piece_type == 0:
