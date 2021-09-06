@@ -35,12 +35,12 @@ class Game():
         
     def checkcollision(self, test_piece): #Check if a piece collides with board or the edges with its current coordinates
         collisionresult = 0;
-        for i in range(0, np.size(self.active_piece.data,1)):
-            for j in range(0,np.size(self.active_piece.data,0)):
+        for i in range(0, np.size(test_piece.data,1)):
+            for j in range(0,np.size(test_piece.data,0)):
                 if(test_piece.y-i < 0 or test_piece.x+j < 0 or test_piece.x+j > 9):
-                    collisionresult += self.active_piece.data[j,i];
+                    collisionresult += test_piece.data[j,i];
                 else:
-                    collisionresult += self.board[test_piece.y-i, test_piece.x+j]*self.active_piece.data[j,i];        
+                    collisionresult += self.board[test_piece.y-i, test_piece.x+j]*test_piece.data[j,i];        
         
         return collisionresult;
         
