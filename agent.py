@@ -51,19 +51,24 @@ class DQL():
     def __init__(self, input_size, nb_actions, gamma):
         self.gamma = gamma;
         
+    def select_action(self,state):
+        pass;
+        
+    def update(self, reward, new_state):
+        pass;
         
     def save(self):
         torch.save({'state_dict': self.model.state_dict(),
                     'optimizer' : self.optimizer.state_dict(),
                    }, 'tetris_agent.pth');
-        print()
+        print("Saved agent.")
     
     def load(self):
         if os.path.isfile('tetris_agent.pth'):
             print("=> Loading agent... ")
-            checkpoint = torch.load('last_brain.pth')
+            checkpoint = torch.load('tetris_agent.pth')
             self.model.load_state_dict(checkpoint['state_dict'])
             self.optimizer.load_state_dict(checkpoint['optimizer'])
-            print("done !")
+            print("Done !")
         else:
-            print("no checkpoint found...")
+            print("No agent found...")
