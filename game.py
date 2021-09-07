@@ -14,18 +14,27 @@ class Game():
         self.is_piece_active = False;
         self.game_over = False;
         self.reward = 0;
+        self.pieces_list = self.random_list();
         
     def getReward(self):
         toReturn =  self.reward;
         self.reward = 0;
         return toReturn;
+    
+    def random_list(self):
+        newlist = np.array([0,1,2,3,4,5,6]);
+        np.random.shuffle(newlist);
+        return newlist;
         
     def update(self, *args):
         if not (self.game_over):
             self.check_lines();
             if(self.is_piece_active == False):
                 self.is_piece_active = True;
-                self.active_piece = piece.Piece(random.randint(0,6));
+                if(np.size(self.pieces_list) == 0):
+                    self.pieces_list = self.random_list();
+                self.active_piece = piece.Piece(self.pieces_list[0]);
+                self.pieces_list = np.delete(self.pieces_list,0);
             else:
                 self.active_piece.y -= 1;
                 if(self.checkcollision(self.active_piece)):
