@@ -51,11 +51,12 @@ class TetrisWidget(Widget):
 
 class TetrisApp(App):
     def __init__(self, tetrisGame):
+        App.__init__(self)
         self.tetrisGame = tetrisGame
 
 
     def build(self):
-        tetrisapp = TetrisWidget()
+        tetrisapp = TetrisWidget(self.tetrisGame)
         Clock.schedule_interval(self.tetrisGame.update,0.5)
         Clock.schedule_interval(tetrisapp.update, 0.5)
         return tetrisapp
