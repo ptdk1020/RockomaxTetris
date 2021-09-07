@@ -13,6 +13,12 @@ class Game():
         self.boardandpiece = np.zeros((2,20,10)) #3D array.  0 for a dead block, 1 for for a block from the active piece
         self.is_piece_active = False;
         self.game_over = False;
+        self.reward = 0;
+        
+    def getReward(self):
+        toReturn =  self.reward;
+        self.reward = 0;
+        return toReturn;
         
     def update(self, *args):
         if not (self.game_over):
@@ -34,6 +40,7 @@ class Game():
             if full == 1:
                 self.board[i:-1, :] = self.board[i + 1:, :]
                 self.board[19,:] = 0
+                self.reward += 100;
             else:
                 i += 1
 
@@ -69,6 +76,7 @@ class Game():
                 if(self.active_piece.data[j,i] == 1 and self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
                     self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i];
         self.update_visibleboard();
+        self.reward += (10 - self.active_piece.y);
         return;
 
     def left(self):
