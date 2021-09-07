@@ -51,6 +51,11 @@ class DQL():
     def __init__(self, input_size, nb_actions, gamma):
         self.gamma = gamma;
         
+    def select_action(self,state):
+        pass;
+        
+    def update(self, reward, new_state):
+        pass;
         
     def save(self):
         torch.save({'state_dict': self.model.state_dict(),
