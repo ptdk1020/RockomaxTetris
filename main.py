@@ -12,7 +12,7 @@ if mode == 0:
     Config.set('graphics', 'width', '700')
     Config.set('graphics', 'height', '700')
     tetrisGame = game.Game()
-    app.TetrisApp().run()
+    app.TetrisApp(tetrisGame).run()
 elif mode == 1:
     epochs = 1000
 

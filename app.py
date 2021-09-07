@@ -9,7 +9,7 @@ import game
 
 
 class TetrisWidget(Widget):
-    def __init__(self, **kwargs):
+    def __init__(self, tetrisGame, **kwargs):
         super(TetrisWidget, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self.press, self)
         self._keyboard.bind(on_key_down=self.press)
@@ -35,7 +35,6 @@ class TetrisWidget(Widget):
                             
 
     def press(self, keyboard, keycode, text, modifiers):
-        global tetrisGame
         if keycode[1] == 'left':
             tetrisGame.left();
         if keycode[1] == 'right':
@@ -51,7 +50,7 @@ class TetrisWidget(Widget):
         return True
 
 class TetrisApp(App):
-    def __init__(self):
+    def __init__(self, tetrisGame):
         self.tetrisGame = tetrisGame
 
 
