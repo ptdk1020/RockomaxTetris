@@ -13,6 +13,7 @@ class TetrisWidget(Widget):
         super(TetrisWidget, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self.press, self)
         self._keyboard.bind(on_key_down=self.press)
+        self.tetrisGame = tetrisGame
     
     def update(self, *args):
         self.canvas.clear();
@@ -33,7 +34,8 @@ class TetrisWidget(Widget):
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
                             
 
-    def press(self, keyboard, keycode, text, modifiers, tetrisGame):
+    def press(self, keyboard, keycode, text, modifiers):
+        global tetrisGame
         if keycode[1] == 'left':
             tetrisGame.left();
         if keycode[1] == 'right':
@@ -49,6 +51,10 @@ class TetrisWidget(Widget):
         return True
 
 class TetrisApp(App):
+    def __init__(self):
+        self.tetrisGame = tetrisGame
+
+
     def build(self):
         tetrisapp = TetrisWidget()
         Clock.schedule_interval(tetrisGame.update,0.5)
