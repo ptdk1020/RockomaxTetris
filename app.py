@@ -45,6 +45,8 @@ class TetrisWidget(Widget):
             self.tetrisGame.down();
         if keycode[1] == 'spacebar':
             print("spacebar");
+        if keycode[1] == 'r':
+            self.tetrisGame.start();
         self.tetrisGame.update_visibleboard();
         self.update(0.5);
         return True
