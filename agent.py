@@ -50,9 +50,22 @@ class ReplayMemory():
 class DQL():
     def __init__(self, input_size, nb_actions, gamma):
         self.gamma = gamma;
+        self.reward_window = [];
+        self.model = Brain(input_size, nb_actions);
+        self.memory = ReplayMemory(500);
+        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.005);
+        self.last_state = torch.Tensor(input_size).unsqueeze(0);
+        self.last_action = 0;
+        self.last_reward = 0;
         
-    def select_action(self,state):
-        pass;
+    def select_action(self,state, training = True):
+        if(training):
+            probs = F.softmax(self.model(Variable(state, volatile = True))*100); # T=100
+            action = probs.multinomial(1)
+            return action.data[0,0]          
+        else:
+            probs = self.model(Variable(state, volatile = True));
+            return torch.argmax(probs).item();
         
     def update(self, reward, new_state):
         pass;
