@@ -2,16 +2,11 @@ import sys
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
-from kivy.config import Config
 from kivy.graphics import Color, Rectangle
 from kivy.core.window import Window
 
 import game
 
-Config.set('graphics', 'width', '700')
-Config.set('graphics', 'height', '700')
-
-tetrisGame = game.Game();
 
 class TetrisWidget(Widget):
     def __init__(self, **kwargs):
@@ -38,7 +33,7 @@ class TetrisWidget(Widget):
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
                             
 
-    def press(self, keyboard, keycode, text, modifiers):
+    def press(self, keyboard, keycode, text, modifiers, tetrisGame):
         if keycode[1] == 'left':
             tetrisGame.left();
         if keycode[1] == 'right':
@@ -60,5 +55,5 @@ class TetrisApp(App):
         Clock.schedule_interval(tetrisapp.update, 0.5)
         return tetrisapp
 
-if __name__ == "__main__":
-    TetrisApp().run()
+# if __name__ == "__main__":
+#     TetrisApp().run()
