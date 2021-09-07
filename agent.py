@@ -65,7 +65,7 @@ class DQL():
             return action.data[0,0]          
         else:
             probs = self.model(Variable(state, volatile = True));
-            return probs.max();
+            return torch.argmax(probs).item();
         
     def update(self, reward, new_state):
         pass;
@@ -85,7 +85,3 @@ class DQL():
             print("Done !")
         else:
             print("No agent found...")
-
-testbrain = Brain(400, 4);
-testTensor = testbrain(torch.Tensor(400).unsqueeze(0));
-print(torch.max(testTensor).item())
