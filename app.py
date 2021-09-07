@@ -21,14 +21,14 @@ class TetrisWidget(Widget):
             for i in range(0,10):
                 for j in range(0,20):
                     # Add a blue color
-                        if(tetrisGame.boardandpiece[0,j,i] == 1):
+                        if(self.tetrisGame.boardandpiece[0,j,i] == 1):
                             Color(0, 1.0, 0)
                             # Add a square for the inactive Tetris piece blocks
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
             for i in range(0,10):
                 for j in range(0,20):
                     # Add a red color
-                        if(tetrisGame.boardandpiece[1,j,i] == 1):
+                        if(self.tetrisGame.boardandpiece[1,j,i] == 1):
                             Color(1., 0, 0)
                             # Add a square for the active Tetris piece blocks
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
@@ -36,16 +36,16 @@ class TetrisWidget(Widget):
 
     def press(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'left':
-            tetrisGame.left();
+            self.tetrisGame.left();
         if keycode[1] == 'right':
-            tetrisGame.right();
+            self.tetrisGame.right();
         if keycode[1] == 'up':
-            tetrisGame.up();
+            self.tetrisGame.up();
         if keycode[1] == 'down':
-            tetrisGame.down();
+            self.tetrisGame.down();
         if keycode[1] == 'spacebar':
             print("spacebar");
-        tetrisGame.update_visibleboard();
+        self.tetrisGame.update_visibleboard();
         self.update(0.5);
         return True
 
@@ -56,7 +56,7 @@ class TetrisApp(App):
 
     def build(self):
         tetrisapp = TetrisWidget()
-        Clock.schedule_interval(tetrisGame.update,0.5)
+        Clock.schedule_interval(self.tetrisGame.update,0.5)
         Clock.schedule_interval(tetrisapp.update, 0.5)
         return tetrisapp
 
