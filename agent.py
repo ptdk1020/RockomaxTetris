@@ -18,9 +18,9 @@ class Brain(nn.Module):
         super(Brain, self).__init__();
         self.input_size = input_size;
         self.nb_action = nb_actions;
-        self.fc1 = nn.Linear(input_size, 1000);
-        self.fc2 = nn.Linear(1000, 1000);
-        self.fc3 = nn.Linear(1000, nb_actions);
+        self.fc1 = nn.Linear(input_size, 2000);
+        self.fc2 = nn.Linear(2000, 500);
+        self.fc3 = nn.Linear(500, nb_actions);
         
     def forward(self, state):
         x = F.relu(self.fc1(state));
