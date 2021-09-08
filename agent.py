@@ -54,7 +54,7 @@ class DQL():
         self.gamma = gamma;
         self.model = Brain(input_size, nb_actions);
         self.memory = ReplayMemory(2000);
-        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.005);
+        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.005); #Learning rate 0.005
         self.last_state = torch.Tensor(input_size).unsqueeze(0).float();
         self.last_action = 0;
         self.last_reward = 0;
