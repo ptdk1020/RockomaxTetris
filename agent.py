@@ -64,7 +64,7 @@ class DQL():
         
     def select_action(self,state, training = True):
         if(training):
-            probs = F.softmax(self.model(Variable(torch.from_numpy(state).unsqueeze(0).float()))*20); # T=20
+            probs = F.softmax(self.model(Variable(torch.from_numpy(state).unsqueeze(0).float()))*50); # T=50
             action = probs.multinomial(1)
             return action.data[0,0]          
         else:
