@@ -15,11 +15,16 @@ class Game():
         self.game_over = False;
         self.reward = 0;
         self.pieces_list = self.random_list();
+        self.total_score = 0;
         
     def getReward(self):
-        toReturn =  self.reward;
+        reward =  self.reward;
+        self.total_score += reward;
         self.reward = 0;
-        return toReturn;
+        return reward;
+    
+    def getScore(self):
+        return self.total_score;
     
     def random_list(self):
         newlist = np.array([0,1,2,3,4,5,6]);
