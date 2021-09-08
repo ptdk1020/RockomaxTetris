@@ -21,7 +21,7 @@ elif mode == 1:
 
     # initialize and load DQL agent
     tetrisAgent = agent.DQL(400, 4, 0.99)
-    tetrisAgent.load()
+    #tetrisAgent.load()
 
     # initialize number of games and total score
     num_games = 0
