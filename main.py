@@ -42,7 +42,7 @@ elif mode == 1:
             if tetrisGame.game_over == True:
                 num_games += 1
                 total_score += tetrisGame.getScore()
-                print('Epoch {} :'.format(i+1)+'Average score after {} games is {}'.format(num_games, total_score/num_games))
+                print('Epoch {} :'.format(i+1)+' Average score after {} games is {}'.format(num_games, total_score/num_games))
                 tetrisGame.start()
                 tetrisGame.update()
 
