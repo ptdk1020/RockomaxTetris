@@ -20,12 +20,14 @@ class Brain(nn.Module):
         self.nb_action = nb_actions;
         self.fc1 = nn.Linear(input_size, 2000);
         self.fc2 = nn.Linear(2000, 500);
-        self.fc3 = nn.Linear(500, nb_actions);
+        self.fc3 = nn.Linear(500,100)
+        self.fc4 = nn.Linear(100, nb_actions);
         
     def forward(self, state):
         x = F.relu(self.fc1(state));
         x = F.relu(self.fc2(x));
-        q_values = F.relu(self.fc3(x))
+        x = F.relu(self.fc3(x));
+        q_values = F.relu(self.fc4(x))
         return q_values;
     
 #Experience replay
