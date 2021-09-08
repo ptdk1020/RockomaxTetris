@@ -15,8 +15,8 @@ if mode == 0:
     tetrisGame = game.Game()
     app.TetrisApp(tetrisGame).run()
 elif mode == 1:
-    epochs = 100
-    ticks = 100
+    epochs = 10
+    ticks = 10000
     avg_scores = 0
 
     # initialize and load DQL agent
@@ -27,19 +27,20 @@ elif mode == 1:
     num_games = 0
     total_score = 0
 
-    #initelize a game
+    #initialize a game
     tetrisGame = game.Game()
     tetrisGame.update()
 
     # training agent
-    for _ in range(epochs):
+    for i in range(epochs):
         for _ in range(ticks):
             # possible game end processing
             if tetrisGame.game_over == True:
                 num_games += 1
                 total_score += tetrisGame.getScore()
+                print('Epoch number {} \n'.format(i+1))
                 print('Average score after {} games is {}'.format(num_games, total_score/num_games))
-                tetrisGame = game.Game()
+                tetrisGame = tetrisGame.start()
                 tetrisGame.update()
 
             # action selection
