@@ -18,15 +18,18 @@ class Brain(nn.Module):
         super(Brain, self).__init__();
         self.input_size = input_size;
         self.nb_action = nb_actions;
-        self.fc1 = nn.Linear(input_size, 2000);
-        self.fc2 = nn.Linear(2000, 500);
-        self.fc3 = nn.Linear(500,100)
-        self.fc4 = nn.Linear(100, nb_actions);
+        self.fc1 = nn.Linear(input_size, 4000);
+        self.fc2 = nn.Linear(4000, 500);  
+        self.fc3 = nn.Linear(500, 20); 
+        self.fc4 = nn.Linear(20, nb_actions);
         
     def forward(self, state):
         x = F.relu(self.fc1(state));
         x = F.relu(self.fc2(x));
         x = F.relu(self.fc3(x));
+        #x = F.relu(self.fc4(x));
+        #x = F.relu(self.fc5(x));
+        #x = F.relu(self.fc6(x));
         q_values = F.relu(self.fc4(x))
         return q_values;
     
@@ -54,14 +57,14 @@ class DQL():
         self.gamma = gamma;
         self.model = Brain(input_size, nb_actions);
         self.memory = ReplayMemory(250); #Memory capacity of 250
-        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.002); #Learning rate 0.005
+        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.002); #Learning rate 0.002
         self.last_state = torch.Tensor(input_size).unsqueeze(0).float();
         self.last_action = 0;
         self.last_reward = 0;
         
     def select_action(self,state, training = True):
         if(training):
-            probs = F.softmax(self.model(Variable(torch.from_numpy(state).unsqueeze(0).float()))*100); # T=100
+            probs = F.softmax(self.model(Variable(torch.from_numpy(state).unsqueeze(0).float()))*20); # T=20
             action = probs.multinomial(1)
             return action.data[0,0]          
         else:
@@ -72,7 +75,7 @@ class DQL():
         outputs = self.model(batch_state).gather(1, batch_action.unsqueeze(1)).squeeze(1);
         next_outputs = self.model(batch_next_state).detach().max(1)[0];
         target = self.gamma*next_outputs + batch_reward;
-        td_loss = F.smooth_l1_loss(outputs, target);
+        td_loss = F.mse_loss(outputs, target);
         self.optimizer.zero_grad();
         td_loss.backward();
         self.optimizer.step();

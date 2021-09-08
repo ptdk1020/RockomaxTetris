@@ -20,7 +20,7 @@ elif mode == 1:
     avg_scores = 0
 
     # initialize and load DQL agent
-    tetrisAgent = agent.DQL(400, 4, 0.99)
+    tetrisAgent = agent.DQL(400, 4, 0.95)
     tetrisAgent.load()
 
     #initialize a game
@@ -71,7 +71,7 @@ elif mode == 2:
     Config.set('graphics', 'width', '700')
     Config.set('graphics', 'height', '700')
     tetrisGame = game.Game();
-    tetrisAgent = agent.DQL(400,4, 0.99);
+    tetrisAgent = agent.DQL(400,4, 0.95);
     tetrisAgent.load();
     app.TetrisApp(tetrisGame, tetrisAgent).run();    
 

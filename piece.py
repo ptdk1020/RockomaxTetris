@@ -1,8 +1,9 @@
 import numpy as np
+import random
 
 class Piece(): 
     def __init__(self, piece_type):
-        self.x = 4;
+        self.x = 2 + random.randint(0,4) ;
         self.y = 22;
         self.data = np.zeros((4,4))
         self.piece_type = piece_type;
@@ -19,7 +20,7 @@ class Piece():
         elif piece_type == 5:
             self.data = np.array([[0,0,0],[1,0,0],[1,1,1]]);
         elif piece_type == 6:
-            self.data = np.array([[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]]);
+            self.data = np.array([[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]]);
         
     def clockwise_rotate(self):
         if self.piece_type == 0:
