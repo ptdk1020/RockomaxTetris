@@ -9,8 +9,8 @@ class Game():
         self.start();
         
     def start(self):
-        self.board = np.zeros((23,10)) #Game board extends internally above y = 20 to allow pieces to exist there
-        self.boardandpiece = np.zeros((2,20,10)) #3D array.  0 for a dead block, 1 for for a block from the active piece
+        self.board = np.zeros((23,10), dtype="float64") #Game board extends internally above y = 20 to allow pieces to exist there
+        self.boardandpiece = np.zeros((2,20,10), dtype = "float64") #3D array.  0 for a dead block, 1 for for a block from the active piece
         self.is_piece_active = False;
         self.game_over = False;
         self.reward = 0;

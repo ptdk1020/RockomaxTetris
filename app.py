@@ -1,3 +1,4 @@
+import numpy as np
 import sys
 from kivy.app import App
 from kivy.clock import Clock
@@ -9,11 +10,12 @@ import game
 
 
 class TetrisWidget(Widget):
-    def __init__(self, tetrisGame, **kwargs):
+    def __init__(self, tetrisGame, agent = 0, **kwargs):
         super(TetrisWidget, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self.press, self)
         self._keyboard.bind(on_key_down=self.press)
         self.tetrisGame = tetrisGame
+        self.agent = agent;
     
     def update(self, *args):
         self.canvas.clear();
@@ -50,17 +52,31 @@ class TetrisWidget(Widget):
         self.tetrisGame.update_visibleboard();
         self.update(0.5);
         return True
+    
+    def playAgent(self, *args):
+        action = self.agent.select_action(self.tetrisGame.boardandpiece.flatten(), False)
+        print(action);
+        if(action == 0):
+            self.tetrisGame.left();
+        if(action == 1):
+            self.tetrisGame.up();
+        if(action == 2):
+            self.tetrisGame.right();
+        if(action == 3):
+            self.tetrisGame.down();
 
 class TetrisApp(App):
-    def __init__(self, tetrisGame):
+    def __init__(self, tetrisGame, agent = 0):
         App.__init__(self)
         self.tetrisGame = tetrisGame
-
+        if(agent != 0):
+            self.agent = agent;
 
     def build(self):
-        tetrisapp = TetrisWidget(self.tetrisGame)
+        tetrisapp = TetrisWidget(self.tetrisGame, self.agent)
         Clock.schedule_interval(self.tetrisGame.update,0.5)
         Clock.schedule_interval(tetrisapp.update, 0.5)
+        Clock.schedule_interval(tetrisapp.playAgent,0.1)
         return tetrisapp
 
 # if __name__ == "__main__":

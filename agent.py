@@ -61,11 +61,11 @@ class DQL():
         
     def select_action(self,state, training = True):
         if(training):
-            probs = F.softmax(self.model(Variable(state, volatile = True))*100); # T=100
+            probs = F.softmax(self.model(Variable(torch.from_numpy(state).unsqueeze(0).float()))*100); # T=100
             action = probs.multinomial(1)
             return action.data[0,0]          
         else:
-            probs = self.model(Variable(state, volatile = True));
+            probs = self.model(Variable(torch.from_numpy(state).unsqueeze(0).float()));
             return torch.argmax(probs).item();
         
     def learn(self, batch_state, batch_next_state, batch_reward, batch_action):
