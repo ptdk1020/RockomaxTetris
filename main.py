@@ -15,7 +15,7 @@ if mode == 0:
     tetrisGame = game.Game()
     app.TetrisApp(tetrisGame).run()
 elif mode == 1:
-    epochs = 10
+    epochs = 1
     ticks = 10000
     avg_scores = 0
 
