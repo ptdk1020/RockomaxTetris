@@ -1,4 +1,5 @@
 import game
+import agent
 from kivy.config import Config
 
 # choosing a mode
@@ -15,7 +16,15 @@ if mode == 0:
     app.TetrisApp(tetrisGame).run()
 elif mode == 1:
     epochs = 1000
-
+    
+elif mode == 2:
+    import app
+    Config.set('graphics', 'width', '700')
+    Config.set('graphics', 'height', '700')
+    tetrisGame = game.Game();
+    tetrisAgent = agent.DQL(400,4, 0.99);
+    tetrisAgent.load();
+    app.TetrisApp(tetrisGame, tetrisAgent).run();    
 
 
 
