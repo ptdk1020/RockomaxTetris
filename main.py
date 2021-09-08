@@ -42,9 +42,9 @@ elif mode == 1:
             if tetrisGame.game_over == True:
                 num_games += 1
                 total_score += tetrisGame.getScore()
-                print('Epoch number {} \n'.format(i+1))
+                print('Epoch {} :'.format(i+1))
                 print('Average score after {} games is {}'.format(num_games, total_score/num_games))
-                tetrisGame = tetrisGame.start()
+                tetrisGame.start()
                 tetrisGame.update()
 
             # action selection
@@ -62,6 +62,7 @@ elif mode == 1:
             tetrisAgent.update(tetrisGame.getReward(), tetrisGame.boardandpiece.flatten())
 
         # save at the end of epoch
+        print('End of Epoch...');
         tetrisAgent.save()
 
     
