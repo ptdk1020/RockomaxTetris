@@ -78,7 +78,8 @@ class Game():
                     collisionresult += test_piece.data[j,i];
                 else:
                     collisionresult += self.board[test_piece.y-i, test_piece.x+j]*test_piece.data[j,i];        
-        
+        if(collisionresult):
+            self.reward -= 1;
         return collisionresult;
         
     def mergepiece(self): #Merge the piece with the board
