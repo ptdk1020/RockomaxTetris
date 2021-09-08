@@ -78,9 +78,9 @@ class DQL():
         self.optimizer.step();
         
     def update(self, reward, new_visible_state):
-        new_state = torch.from_numpy(new_visible_state).unsqueeze(0).float();
+        new_state = Variable(torch.from_numpy(new_visible_state).unsqueeze(0).float());
         self.memory.push((self.last_state, new_state, torch.LongTensor([int(self.last_action)]), torch.Tensor([self.last_reward])))
-        action = self.select_action(new_state);
+        action = self.select_action(new_visible_state);
         if len(self.memory.memory) > 100: #Learning after 100 actions
             batch_state, batch_next_state, batch_action, batch_reward = self.memory.sample(100);
             self.learn(batch_state, batch_next_state, batch_reward, batch_action);
