@@ -21,11 +21,7 @@ elif mode == 1:
 
     # initialize and load DQL agent
     tetrisAgent = agent.DQL(400, 4, 0.99)
-    #tetrisAgent.load()
-
-    # initialize number of games and total score
-    num_games = 0
-    total_score = 0
+    tetrisAgent.load()
 
     #initialize a game
     tetrisGame = game.Game()
@@ -33,6 +29,10 @@ elif mode == 1:
 
     # training agent
     for i in range(epochs):
+        # initialize number of games and total score
+        num_games = 0
+        total_score = 0
+        
         for j in range(ticks):
             if (j+1) % 5 == 0:
                 tetrisGame.update()
