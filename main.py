@@ -33,7 +33,11 @@ elif mode == 1:
 
     # training agent
     for i in range(epochs):
-        for _ in range(ticks):
+        for j in range(ticks):
+            if (j+1) % 5 == 0:
+                tetrisGame.update()
+
+
             # possible game end processing
             if tetrisGame.game_over == True:
                 num_games += 1
