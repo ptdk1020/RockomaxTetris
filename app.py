@@ -63,6 +63,7 @@ class TetrisWidget(Widget):
             self.tetrisGame.right();
         if(action == 3):
             self.tetrisGame.down();
+        self.tetrisGame.update_visibleboard();
 
 class TetrisApp(App):
     def __init__(self, tetrisGame, agent = 0):

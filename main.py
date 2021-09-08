@@ -15,7 +15,7 @@ if mode == 0:
     tetrisGame = game.Game()
     app.TetrisApp(tetrisGame).run()
 elif mode == 1:
-    epochs = 1
+    epochs = 2
     ticks = 10000
     avg_scores = 0
 
@@ -32,8 +32,9 @@ elif mode == 1:
         # initialize number of games and total score
         num_games = 0
         total_score = 0
-        
         for j in range(ticks):
+            if(j % 500 == 0):
+                print('Epoch progress {}%'.format(j/100.0))
             if (j+1) % 5 == 0:
                 tetrisGame.update()
 
@@ -56,7 +57,7 @@ elif mode == 1:
                 tetrisGame.right()
             if action == 3:
                 tetrisGame.down()
-
+            tetrisGame.update_visibleboard();
             # update agent
             tetrisAgent.update(tetrisGame.getReward(), tetrisGame.boardandpiece.flatten())
 
