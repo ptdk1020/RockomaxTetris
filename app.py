@@ -55,7 +55,6 @@ class TetrisWidget(Widget):
     
     def playAgent(self, *args):
         action = self.agent.select_action(self.tetrisGame.boardandpiece.flatten(), False)
-        print(action);
         if(action == 0):
             self.tetrisGame.left();
         if(action == 1):

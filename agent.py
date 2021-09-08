@@ -54,8 +54,8 @@ class DQL():
         self.gamma = gamma;
         self.model = Brain(input_size, nb_actions);
         self.memory = ReplayMemory(2000);
-        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.005);
-        self.last_state = torch.Tensor(input_size).unsqueeze(0);
+        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.005); #Learning rate 0.005
+        self.last_state = torch.Tensor(input_size).unsqueeze(0).float();
         self.last_action = 0;
         self.last_reward = 0;
         
@@ -78,7 +78,7 @@ class DQL():
         self.optimizer.step();
         
     def update(self, reward, new_visible_state):
-        new_state = torch.Tensor(new_visible_state).float().unsqueeze(0);
+        new_state = torch.from_numpy(new_visible_state).unsqueeze(0).float();
         self.memory.push((self.last_state, new_state, torch.LongTensor([int(self.last_action)]), torch.Tensor([self.last_reward])))
         action = self.select_action(new_state);
         if len(self.memory.memory) > 100: #Learning after 100 actions

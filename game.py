@@ -90,7 +90,7 @@ class Game():
                 if(self.active_piece.data[j,i] == 1 and self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
                     self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i];
         self.update_visibleboard();
-        self.reward += (10 - self.active_piece.y);
+        self.reward += (8 - self.active_piece.y);
         return;
 
     def left(self):
