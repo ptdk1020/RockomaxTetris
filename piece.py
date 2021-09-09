@@ -1,10 +1,11 @@
 import numpy as np
 import random
+import game
 
 class Piece(): 
     def __init__(self, piece_type):
-        self.x = 2 + random.randint(0,4) ;
-        self.y = 22;
+        self.x = 0 ;
+        self.y = game.height + 2;
         self.data = np.zeros((4,4))
         self.piece_type = piece_type;
         if piece_type == 0:

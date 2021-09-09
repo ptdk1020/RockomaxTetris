@@ -20,7 +20,7 @@ elif mode == 1:
     avg_scores = 0
 
     # initialize and load DQL agent
-    tetrisAgent = agent.DQL(400, 4, 0.95)
+    tetrisAgent = agent.DQL(2*game.height*game.width, 2, 0.99)
     tetrisAgent.load()
 
     #initialize a game
@@ -32,34 +32,39 @@ elif mode == 1:
         # initialize number of games and total score
         num_games = 0
         total_score = 0
+        game_length = 0;
+        tetrisGame.start();
         for j in range(ticks):
-            if(j % 500 == 0):
+            if(j % 1000 == 0):
                 print('Epoch progress {}%'.format(j/100.0))
-            if (j+1) % 5 == 0:
-                tetrisGame.update()
-
+#            if (j+1) % 2 == 0: #updating the game every x tick
+            tetrisGame.update() #updating the game every tick
+            game_length +=1;
 
             # possible game end processing
-            if tetrisGame.game_over == True:
+            if tetrisGame.game_over == True or game_length > 1000:
+                game_length = 1;
                 num_games += 1
                 total_score += tetrisGame.getScore()
                 print('Epoch {} :'.format(i+1)+' Average score after {} games is {}'.format(num_games, total_score/num_games))
                 tetrisGame.start()
                 tetrisGame.update()
 
+            tetrisGame.check_lines();
             # action selection
             action = tetrisAgent.select_action(tetrisGame.boardandpiece.flatten())
+            tetrisAgent.update(tetrisGame.getReward(), tetrisGame.boardandpiece.flatten(), action)
+
             if action == 0:
-                tetrisGame.left()
+                tetrisGame.left();
             if action == 1:
-                tetrisGame.up()
+                tetrisGame.right();
             if action == 2:
-                tetrisGame.right()
+                tetrisGame.down();
             if action == 3:
-                tetrisGame.down()
+                tetrisGame.up();
             tetrisGame.update_visibleboard();
             # update agent
-            tetrisAgent.update(tetrisGame.getReward(), tetrisGame.boardandpiece.flatten())
 
         # save at the end of epoch
         print('End of Epoch...');
@@ -71,7 +76,7 @@ elif mode == 2:
     Config.set('graphics', 'width', '700')
     Config.set('graphics', 'height', '700')
     tetrisGame = game.Game();
-    tetrisAgent = agent.DQL(400,4, 0.95);
+    tetrisAgent = agent.DQL(2*game.height*game.width,2, 0.95);
     tetrisAgent.load();
     app.TetrisApp(tetrisGame, tetrisAgent).run();    
 

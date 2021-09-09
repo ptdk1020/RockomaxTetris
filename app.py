@@ -18,23 +18,10 @@ class TetrisWidget(Widget):
         self.agent = agent;
     
     def update(self, *args):
-        self.canvas.clear();
-        with self.canvas:
-            for i in range(0,10):
-                for j in range(0,20):
-                    # Add a blue color
-                        if(self.tetrisGame.boardandpiece[0,j,i] == 1):
-                            Color(0, 1.0, 0)
-                            # Add a square for the inactive Tetris piece blocks
-                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
-            for i in range(0,10):
-                for j in range(0,20):
-                    # Add a red color
-                        if(self.tetrisGame.boardandpiece[1,j,i] == 1):
-                            Color(1., 0, 0)
-                            # Add a square for the active Tetris piece blocks
-                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
-                            
+        self.tetrisGame.update();
+        self.draw();
+        if(self.agent != 0):
+            self.playAgent();
 
     def press(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'left':
@@ -49,21 +36,42 @@ class TetrisWidget(Widget):
             print("spacebar");
         if keycode[1] == 'r':
             self.tetrisGame.start();
+        if keycode[1] == 'q':
+            App.get_running_app().stop();
         self.tetrisGame.update_visibleboard();
         self.update(0.5);
         return True
     
+    def draw(self):
+        self.canvas.clear();
+        with self.canvas:
+            for i in range(0,game.width):
+                for j in range(0,game.height):
+                    # Add a blue color
+                        if(self.tetrisGame.boardandpiece[0,j,i] == 1):
+                            Color(0, 1.0, 0)
+                            # Add a square for the inactive Tetris piece blocks
+                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
+            for i in range(0,game.width):
+                for j in range(0,game.height):
+                    # Add a red color
+                        if(self.tetrisGame.boardandpiece[1,j,i] == 1):
+                            Color(1., 0, 0)
+                            # Add a square for the active Tetris piece blocks
+                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
+    
     def playAgent(self, *args):
-        action = self.agent.select_action(self.tetrisGame.boardandpiece.flatten(), True)
-        if(action == 0):
+        action = self.agent.select_action(self.tetrisGame.boardandpiece.flatten(), False)
+        if action == 0:
             self.tetrisGame.left();
-        if(action == 1):
-            self.tetrisGame.up();
-        if(action == 2):
+        if action == 1:
             self.tetrisGame.right();
-        if(action == 3):
+        if action == 2:
             self.tetrisGame.down();
+        if action == 3:
+            self.tetrisGame.up();
         self.tetrisGame.update_visibleboard();
+        self.draw();
 
 class TetrisApp(App):
     def __init__(self, tetrisGame, agent = 0):
@@ -71,12 +79,12 @@ class TetrisApp(App):
         self.tetrisGame = tetrisGame
         if(agent != 0):
             self.agent = agent;
+        else:
+            self.agent = 0;
 
     def build(self):
         tetrisapp = TetrisWidget(self.tetrisGame, self.agent)
-        Clock.schedule_interval(self.tetrisGame.update,0.5)
         Clock.schedule_interval(tetrisapp.update, 0.5)
-        Clock.schedule_interval(tetrisapp.playAgent,0.1)
         return tetrisapp
 
 # if __name__ == "__main__":
