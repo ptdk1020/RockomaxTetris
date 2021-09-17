@@ -27,7 +27,6 @@ class Training():
         
         # possible game end processing
         if self.game.game_over == True or self.game_length > 2000:
-                print('New game!')
                 self.agent.update(0);
                 self.agent.learn(self.game.boardandpiece.flatten());
                 self.game_length = 1;
@@ -40,7 +39,7 @@ class Training():
 
         if self.game_length != 1: #Collecting rewards except on the first game tick
             self.agent.update(self.game.getReward())
-        if self.game_length % 10 == 0: # Teaching the agent every 10 ticks from game start
+        if self.game_length % 5 == 0: # Teaching the agent every 5 ticks from game start
             self.agent.learn(self.game.boardandpiece.flatten());
         action = self.agent.select_action(self.game.boardandpiece.flatten())
 

@@ -19,32 +19,30 @@ class TetrisWidget(Widget):
         self.tick = 0;
     
     def update(self, *args):
-<<<<<<< Updated upstream
-        self.canvas.clear();
-        with self.canvas:
-            for i in range(0,10):
-                for j in range(0,20):
-                    # Add a blue color
-                        if(self.tetrisGame.boardandpiece[0,j,i] == 1):
-                            Color(0, 1.0, 0)
-                            # Add a square for the inactive Tetris piece blocks
-                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
-            for i in range(0,10):
-                for j in range(0,20):
-                    # Add a red color
-                        if(self.tetrisGame.boardandpiece[1,j,i] == 1):
-                            Color(1., 0, 0)
-                            # Add a square for the active Tetris piece blocks
-                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
-                            
-=======
         if(self.tick % 1 == 0): #Game updates once every 5 ticks
             self.tetrisGame.update();
         self.draw();
         if(self.agent != 0):
             self.playAgent();
         self.tick += 1;
->>>>>>> Stashed changes
+        
+    def draw(self):
+        self.canvas.clear();
+        with self.canvas:
+            for i in range(0,game.width):
+                for j in range(0,game.height):
+                    # Add a blue color
+                        if(self.tetrisGame.boardandpiece[0,j,i] == 1):
+                            Color(0, 1.0, 0)
+                            # Add a square for the inactive Tetris piece blocks
+                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
+            for i in range(0,game.width):
+                for j in range(0,game.height):
+                    # Add a red color
+                        if(self.tetrisGame.boardandpiece[1,j,i] == 1):
+                            Color(1., 0, 0)
+                            # Add a square for the active Tetris piece blocks
+                            Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))      
 
     def press(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'left':
@@ -79,18 +77,11 @@ class TetrisApp(App):
     def __init__(self, tetrisGame, agent = 0):
         App.__init__(self)
         self.tetrisGame = tetrisGame
-        if(agent != 0):
-            self.agent = agent;
+        self.agent = agent;
 
     def build(self):
         tetrisapp = TetrisWidget(self.tetrisGame, self.agent)
-<<<<<<< Updated upstream
-        Clock.schedule_interval(self.tetrisGame.update,0.5)
-        Clock.schedule_interval(tetrisapp.update, 0.5)
-        Clock.schedule_interval(tetrisapp.playAgent,0.1)
-=======
         Clock.schedule_interval(tetrisapp.update, 0.1)
->>>>>>> Stashed changes
         return tetrisapp
 
 # if __name__ == "__main__":
