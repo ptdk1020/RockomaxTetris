@@ -13,10 +13,10 @@ from torch.autograd import Variable
 import model
     
 class A2C(): #advantage actor-critic
-    def __init__(self, main_model, gamma):
+    def __init__(self, main_model, optimizer, gamma):
         self.gamma = gamma;
         self.model = main_model;
-        self.optimizer = optim.Adam(self.model.parameters(), lr = 0.001); #Learning rate 0.001
+        self.optimizer = optimizer;
         self.values = []
         self.log_probs = []
         self.rewards = []
@@ -81,7 +81,6 @@ class A2C(): #advantage actor-critic
        
     def save(self):
         torch.save({'state_dict': self.model.state_dict(),
-                    'optimizer' : self.optimizer.state_dict(),
                    }, 'tetris_agent.pth');
         print("Saved agent.");
     
@@ -90,7 +89,6 @@ class A2C(): #advantage actor-critic
             print("=> Loading agent... ");
             checkpoint = torch.load('tetris_agent.pth');
             self.model.load_state_dict(checkpoint['state_dict']);
-            self.optimizer.load_state_dict(checkpoint['optimizer']);
             print("Done !");
         else:
             print("No agent found...");

@@ -5,7 +5,7 @@ from copy import copy
 import piece
 
 height = 10;
-width = 4;
+width = 6;
 
 class Game():
     def __init__(self):
@@ -24,11 +24,15 @@ class Game():
     def getReward(self):
         reward =  self.reward;
         self.total_score += reward;
+        reward -= self.count_blocks()/100.0;
         self.reward = 0;
         return reward;
     
     def getScore(self):
         return self.total_score;
+    
+    def count_blocks(self):
+        return np.prod(self.boardandpiece[:,:,:]);
     
     def random_list(self):
         newlist = np.array([0])
@@ -111,9 +115,9 @@ class Game():
         # if no collision, move active piece
         if not self.checkcollision(new_piece):
             self.active_piece.x -= 1
-            self.reward += 0.01;
+            self.reward += 0.002 * (height - self.active_piece.y);
         else:
-            self.reward -= 0.1;
+            self.reward -= 0.001;
         return
 
     def right(self):
@@ -122,9 +126,9 @@ class Game():
         # if no collision, move active piece
         if not self.checkcollision(new_piece):
             self.active_piece.x += 1
-            self.reward += 0.01;
+            self.reward += 0.002 * (height - self.active_piece.y);
         else:
-            self.reward -= 0.1;
+            self.reward -= 0.001;
         return
 
     def up(self):
@@ -138,7 +142,7 @@ class Game():
         new_piece = copy(self.active_piece)
         new_piece.y -= 1
         if not self.checkcollision(new_piece):
-            self.reward += 0.01;
+            self.reward += 0.002 * (height - self.active_piece.y);
             self.active_piece = new_piece;
         else:
             self.mergepiece()

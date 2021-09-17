@@ -4,7 +4,7 @@ import game
 
 class Piece(): 
     def __init__(self, piece_type):
-        self.x = 0 ;
+        self.x = 2 + random.randint(0,2) ;
         self.y = game.height + 2;
         self.data = np.zeros((4,4))
         self.piece_type = piece_type;

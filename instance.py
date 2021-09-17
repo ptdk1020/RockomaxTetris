@@ -3,8 +3,8 @@ import game
 
 class Training():
     
-    def __init__(self, main_model, gamma):
-        self.agent = agent_a2c.A2C(main_model, gamma);
+    def __init__(self, main_model, optimizer, gamma):
+        self.agent = agent_a2c.A2C(main_model, optimizer, gamma);
         self.game = game.Game();
         self.reset_epoch();
         self.game_length = 0;
@@ -21,12 +21,12 @@ class Training():
         
     def advance(self, tick):
         
-        if tick % 1 == 0: #updating the game every x tick
+        if tick % 5 == 0: #updating the game every x tick
             self.game.update()
             self.game_length +=1;
         
         # possible game end processing
-        if self.game.game_over == True or self.game_length > 2000:
+        if self.game.game_over == True or self.game_length > 1000:
                 self.agent.update(0);
                 self.agent.learn(self.game.boardandpiece.flatten());
                 self.game_length = 1;

@@ -19,7 +19,7 @@ class TetrisWidget(Widget):
         self.tick = 0;
     
     def update(self, *args):
-        if(self.tick % 1 == 0): #Game updates once every 5 ticks
+        if(self.tick % 5 == 0): #Game updates once every 5 ticks
             self.tetrisGame.update();
         self.draw();
         if(self.agent != 0):
