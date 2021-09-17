@@ -1,5 +1,7 @@
 import game
-import agent
+import model
+import agent_a2c
+import instance
 from kivy.config import Config
 
 # choosing a mode
@@ -19,16 +21,21 @@ elif mode == 1:
     ticks = 10000
     avg_scores = 0
 
+<<<<<<< Updated upstream
     # initialize and load DQL agent
     tetrisAgent = agent.DQL(400, 4, 0.95)
     tetrisAgent.load()
+=======
+    # initialize the brain common to every instance
+    brain = model.Brain(2*game.height*game.width, 3);
+>>>>>>> Stashed changes
 
-    #initialize a game
-    tetrisGame = game.Game()
-    tetrisGame.update()
+    trainer = instance.Training(brain, 0.95)
+    trainer.agent.load();
 
     # training agent
     for i in range(epochs):
+<<<<<<< Updated upstream
         # initialize number of games and total score
         num_games = 0
         total_score = 0
@@ -60,10 +67,19 @@ elif mode == 1:
             tetrisGame.update_visibleboard();
             # update agent
             tetrisAgent.update(tetrisGame.getReward(), tetrisGame.boardandpiece.flatten())
+=======
+        trainer.reset_epoch();
+        for j in range(ticks):
+            if(j % 1000 == 0):
+                average_reward = trainer.get_average();
+                print('Epoch {}'.format(i+1)+' progress {}%'.format(j/100.0)+ ' Average collected score is {}.'.format(average_reward));
+
+            trainer.advance(j);
+>>>>>>> Stashed changes
 
         # save at the end of epoch
         print('End of Epoch...');
-        tetrisAgent.save()
+        trainer.agent.save()
 
     
 elif mode == 2:
@@ -71,7 +87,12 @@ elif mode == 2:
     Config.set('graphics', 'width', '700')
     Config.set('graphics', 'height', '700')
     tetrisGame = game.Game();
+<<<<<<< Updated upstream
     tetrisAgent = agent.DQL(400,4, 0.95);
+=======
+    brain = model.Brain(2*game.height*game.width, 3);
+    tetrisAgent = agent_a2c.A2C(brain, 0.95);
+>>>>>>> Stashed changes
     tetrisAgent.load();
     app.TetrisApp(tetrisGame, tetrisAgent).run();    
 

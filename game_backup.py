@@ -1,28 +1,23 @@
 import numpy as np
-import random
 from copy import copy
 
 import piece
 
-<<<<<<< Updated upstream
-=======
-height = 10;
-width = 4;
+height = 20;
+width = 10;
 
->>>>>>> Stashed changes
 class Game():
     def __init__(self):
         self.start();
         
     def start(self):
-        self.board = np.zeros((23,10), dtype="float64") #Game board extends internally above y = 20 to allow pieces to exist there
-        self.boardandpiece = np.zeros((2,20,10), dtype = "float64") #3D array.  0 for a dead block, 1 for for a block from the active piece
+        self.board = np.zeros((height + 3,width), dtype="float64") #Game board extends internally above y = 20 to allow pieces to exist there
+        self.boardandpiece = np.zeros((2,height,width), dtype = "float64") #3D array.  0 for a dead block, 1 for for a block from the active piece
         self.is_piece_active = False;
         self.game_over = False;
         self.reward = 0;
         self.pieces_list = self.random_list();
         self.total_score = 0;
-        self.grace_period = False;
         
     def getReward(self):
         reward =  self.reward;
@@ -40,12 +35,8 @@ class Game():
         
     def update(self, *args):
         if not (self.game_over):
-            if(self.grace_period == True):
-                self.grace_period = False;
-            else:
-                self.check_lines();
+            self.check_lines();
             if(self.is_piece_active == False):
-                self.survival = 0;
                 self.is_piece_active = True;
                 if(np.size(self.pieces_list) == 0):
                     self.pieces_list = self.random_list();
@@ -57,20 +48,15 @@ class Game():
                     self.active_piece.y += 1;
                     self.mergepiece();
             self.update_visibleboard()
-            self.survival += 1;
+        
     def check_lines(self):
         i = 0
         while i < 20:
             full = np.prod(self.board[i, :])
             if full == 1:
                 self.board[i:-1, :] = self.board[i + 1:, :]
-<<<<<<< Updated upstream
                 self.board[19,:] = 0
-                self.reward += 100;
-=======
-                self.board[height - 1,:] = 0
-                self.reward += 1;
->>>>>>> Stashed changes
+                self.reward += 1000;
             else:
                 i += 1
 
@@ -106,13 +92,8 @@ class Game():
                     self.game_over = True;
                 if(self.active_piece.data[j,i] == 1 and self.board[self.active_piece.y-i, self.active_piece.x+j] == 0):
                     self.board[self.active_piece.y-i, self.active_piece.x+j] = self.active_piece.data[j,i];
-<<<<<<< Updated upstream
         self.update_visibleboard();
-        self.reward += (8 - self.active_piece.y);
-=======
-                    self.reward += (height/2.0 - self.active_piece.y)/100.0
-                    self.grace_period = True;
->>>>>>> Stashed changes
+        self.reward += (20 - self.active_piece.y);
         return;
 
     def left(self):
@@ -121,12 +102,6 @@ class Game():
         # if no collision, move active piece
         if not self.checkcollision(new_piece):
             self.active_piece.x -= 1
-<<<<<<< Updated upstream
-=======
-            self.reward += 0.01;
-        else:
-            self.reward -= 0.1;
->>>>>>> Stashed changes
         return
 
     def right(self):
@@ -135,12 +110,6 @@ class Game():
         # if no collision, move active piece
         if not self.checkcollision(new_piece):
             self.active_piece.x += 1
-<<<<<<< Updated upstream
-=======
-            self.reward += 0.01;
-        else:
-            self.reward -= 0.1;
->>>>>>> Stashed changes
         return
 
     def up(self):
@@ -154,7 +123,6 @@ class Game():
         new_piece = copy(self.active_piece)
         new_piece.y -= 1
         if not self.checkcollision(new_piece):
-            self.reward += 0.01;
-            self.active_piece = new_piece;
+            self.active_piece.y -= 1
         else:
             self.mergepiece()

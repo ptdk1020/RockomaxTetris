@@ -16,8 +16,10 @@ class TetrisWidget(Widget):
         self._keyboard.bind(on_key_down=self.press)
         self.tetrisGame = tetrisGame
         self.agent = agent;
+        self.tick = 0;
     
     def update(self, *args):
+<<<<<<< Updated upstream
         self.canvas.clear();
         with self.canvas:
             for i in range(0,10):
@@ -35,6 +37,14 @@ class TetrisWidget(Widget):
                             # Add a square for the active Tetris piece blocks
                             Rectangle(pos=(200+30*i, 50+30*j), size=(30, 30))
                             
+=======
+        if(self.tick % 1 == 0): #Game updates once every 5 ticks
+            self.tetrisGame.update();
+        self.draw();
+        if(self.agent != 0):
+            self.playAgent();
+        self.tick += 1;
+>>>>>>> Stashed changes
 
     def press(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'left':
@@ -50,7 +60,7 @@ class TetrisWidget(Widget):
         if keycode[1] == 'r':
             self.tetrisGame.start();
         self.tetrisGame.update_visibleboard();
-        self.update(0.5);
+        self.draw();
         return True
     
     def playAgent(self, *args):
@@ -74,9 +84,13 @@ class TetrisApp(App):
 
     def build(self):
         tetrisapp = TetrisWidget(self.tetrisGame, self.agent)
+<<<<<<< Updated upstream
         Clock.schedule_interval(self.tetrisGame.update,0.5)
         Clock.schedule_interval(tetrisapp.update, 0.5)
         Clock.schedule_interval(tetrisapp.playAgent,0.1)
+=======
+        Clock.schedule_interval(tetrisapp.update, 0.1)
+>>>>>>> Stashed changes
         return tetrisapp
 
 # if __name__ == "__main__":
